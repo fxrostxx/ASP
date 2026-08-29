@@ -1,0 +1,37 @@
+﻿@page "/fibonacci"
+@rendermode InteractiveServer
+
+<h3>Fibonacci</h3>
+
+<div>
+	<label>Sequence length: </label>
+	<input type="number" @bind="length" @bind:after="Calculate" min="0" />
+</div>
+<div>
+	<h3>@sequence</h3>
+</div>
+<button class="btn btn-primary" @onclick="Calculate">Calculate</button>
+
+
+@code {
+	int length = 0;
+	string sequence = "";
+	void Calculate()
+	{
+		sequence = "";
+		if (length <= 0)
+		{
+			sequence = "";
+			return;
+		}
+		int fib1 = 0;
+		int fib2 = 1;
+		for (int i = 0; i < length; ++i)
+		{
+			sequence += $"{fib1} ";
+			int next = fib1 + fib2;
+			fib1 = fib2;
+			fib2 = next;
+		}
+	}
+}
