@@ -1,19 +1,10 @@
 ﻿@page "/factorial"
 @rendermode InteractiveServer
 
-@using System.Numerics;
-
 <h3>Factorial</h3>
 
-<input type="number" @bind="num" @bind:after="Calculate" min="0"/> ! = <h3>= @factorial</h3>
+<div class="factorial">
+	<input type="number" @bind="num" @bind:after="Calculate" min="0" />
+	<h3>!= @factorial</h3>
+</div>
 <button class="btn btn-primary" @onclick="Calculate">Calculate</button>
-
-@code {
-	int num = 0;
-	BigInteger factorial = 1;
-	void Calculate()
-	{
-		factorial = 1;
-		for (int i = 1; i <= num; ++i) factorial *= i;
-	}
-}
