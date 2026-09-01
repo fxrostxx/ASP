@@ -1,6 +1,7 @@
 ﻿@page "/power"
 @rendermode InteractiveServer
 
+<PageTitle>Power</PageTitle>
 <h3>Power</h3>
 
 <div>
@@ -13,17 +14,3 @@
 	<h3>= @result</h3>
 </div>
 <button class="btn btn-primary" @onclick="Calculate">Calculate</button>
-
-
-@code {
-	int baseNum = 0;
-	int powerNum = 0;
-	double result = 0;
-	void Calculate()
-	{
-		result = 1;
-		if (powerNum == 0) result = 1;
-		for (int i = 0; i < Math.Abs(powerNum); ++i) result *= baseNum;
-		if (powerNum < 0) result = 1 / result;
-	}
-}

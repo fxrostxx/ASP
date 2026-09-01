@@ -10,17 +10,3 @@
 
 <button class="btn btn-primary" @onclick="IncrementCount">Increment</button>
 <button class="btn btn-primary" @onclick="Reset">Reset</button>
-
-@code {
-	private int currentCount = 0;
-	private int increment = 1;
-
-	private void IncrementCount()
-	{
-		currentCount += increment;
-	}
-	private void Reset()
-	{
-		currentCount = 0;
-	}
-}

@@ -50,6 +50,22 @@
     background-image: url("/icons/exclamation-mark.svg");
 }
 
+.bi-power {
+    background-image: url("/icons/power.svg");
+}
+
+.bi-fibonacci {
+    background-image: url("/icons/fibonacci.svg");
+}
+
+.bi-bitcoin {
+    background-image: url("/icons/bitcoin.svg");
+}
+
+.bi-litecoin {
+    background-image: url("/icons/litecoin.svg");
+}
+
 .nav-item {
     font-size: 0.9rem;
     padding-bottom: 0.5rem;
