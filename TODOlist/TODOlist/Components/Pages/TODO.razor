@@ -1,0 +1,32 @@
+﻿@page "/tasklist"
+@rendermode InteractiveServer
+
+<h2>TaskList</h2>
+
+<input type="text" placeholder="New task" @bind="description" />
+<button class="btn btn-primary" @onclick="AddTask">Add</button>
+
+<ul>
+	@foreach (TODOlist.Task task in list)
+	{
+		<li>@task.Description</li>
+	}
+</ul>
+
+@code
+{
+	string description = "";
+	List<TODOlist.Task> list = new List<TODOlist.Task>();
+	void AddTask()
+	{
+		if (!string.IsNullOrEmpty(description) && !string.IsNullOrWhiteSpace(description))
+		{
+			TODOlist.Task task = new TODOlist.Task { Description = description.Trim(), Done = false };
+			if (!list.Contains(task))
+			{
+				list.Add(task);
+				description = "";
+			}
+		}
+	}
+}
