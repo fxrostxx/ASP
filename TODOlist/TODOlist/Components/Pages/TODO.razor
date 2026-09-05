@@ -1,7 +1,13 @@
 ﻿@page "/tasklist"
 @rendermode InteractiveServer
 
-<h2>TaskList</h2>
+<h1>TaskList</h1>
+
+<div class="statistics">
+	<h4>DONE: @list.Where(t => t.Done == true).ToList().Count</h4>
+	<h4>TODO: @list.Where(t => t.Done == false).ToList().Count</h4>
+	<h4>Tasks count: @list.Count</h4>
+</div>
 
 <input type="text" placeholder="New task" @bind="description" />
 <button class="btn btn-primary" @onclick="AddTask">Add</button>
@@ -9,7 +15,13 @@
 <ul>
 	@foreach (TODOlist.Task task in list)
 	{
-		<li>@task.Description</li>
+		<li>
+			<input type="checkbox" @bind="@task.Done" id="@task.Description" />
+			<label for="@task.Description">
+				<span>@task.Description</span>
+				<span>@task.AssignTime</span>
+			</label>
+		</li>
 	}
 </ul>
 
@@ -21,7 +33,7 @@
 	{
 		if (!string.IsNullOrEmpty(description) && !string.IsNullOrWhiteSpace(description))
 		{
-			TODOlist.Task task = new TODOlist.Task { Description = description.Trim(), Done = false };
+			TODOlist.Task task = new TODOlist.Task { Description = description.Trim(), Done = false, AssignTime = DateTime.Now };
 			if (!list.Contains(task))
 			{
 				list.Add(task);
