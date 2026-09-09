@@ -9,3 +9,13 @@
 ::deep .genre {
     width: 30%;
 }
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+input[type=search] {
+    text-align: center;
+}
