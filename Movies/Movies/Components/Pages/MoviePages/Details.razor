@@ -17,16 +17,18 @@
 	else
 	{
 		<div class="details-container">
-			<dl class="row">
-				<dt class="col-sm-2">Title</dt>
-				<dd class="col-sm-10">@movie.Title</dd>
-				<dt class="col-sm-2">Release date</dt>
-				<dd class="col-sm-10">@movie.ReleaseDate</dd>
-				<dt class="col-sm-2">Genre</dt>
-				<dd class="col-sm-10">@movie.Genre</dd>
-				<dt class="col-sm-2">URL</dt>
-				<dd class="col-sm-10"><a href="@movie.URL">@movie.URL</a></dd>
-			</dl>
+			<div>
+				<dl class="row">
+					<dt class="col-sm-2">Title</dt>
+					<dd class="col-sm-10">@movie.Title</dd>
+					<dt class="col-sm-2">Release date</dt>
+					<dd class="col-sm-10">@movie.ReleaseDate</dd>
+					<dt class="col-sm-2">Genre</dt>
+					<dd class="col-sm-10">@movie.Genre</dd>
+					<dt class="col-sm-2">URL</dt>
+					<dd class="col-sm-10"><a href="@movie.URL">@movie.URL</a></dd>
+				</dl>
+			</div>
 			<div>
 				<img src="@movie.Poster" />
 			</div>
