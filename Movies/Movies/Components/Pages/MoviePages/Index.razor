@@ -23,16 +23,18 @@
 	<option value="10">10</option>
 </select>
 
-<QuickGrid Class="table" Items="context.Movie" Pagination="pagination">
-	<PropertyColumn Property="movie => movie.Title" Sortable="true" />
-	<PropertyColumn Property="movie => movie.ReleaseDate" Sortable="true" />
-	<PropertyColumn Property="movie => movie.Genre" Sortable="true" />
+<div>
+	<QuickGrid Class="table" Items="context.Movie" Pagination="pagination">
+		<PropertyColumn Property="movie => movie.Title" Class="movie-title" Sortable="true" />
+		<PropertyColumn Property="movie => movie.ReleaseDate" Class="release-date" Sortable="true" />
+		<PropertyColumn Property="movie => movie.Genre" Class="genre" Sortable="true" />
 
-	<TemplateColumn Context="movie">
-		<a href="@($"movies/details?id={movie.Id}")">Details</a>
-	</TemplateColumn>
-</QuickGrid>
-<Paginator State="pagination" />
+		<TemplateColumn Context="movie">
+			<a href="@($"movies/details?id={movie.Id}")">Details</a>
+		</TemplateColumn>
+	</QuickGrid>
+	<Paginator State="pagination" />
+</div>
 
 @code {
 	private MoviesContext context = default!;

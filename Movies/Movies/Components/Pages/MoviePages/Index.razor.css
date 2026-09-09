@@ -1,0 +1,11 @@
+﻿::deep .movie-title {
+    width: 50%;
+}
+
+::deep .release-date {
+    width: 20%;
+}
+
+::deep .genre {
+    width: 30%;
+}
