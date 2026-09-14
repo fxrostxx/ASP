@@ -8,8 +8,10 @@ namespace Academy.Models
 		[Key]
 		[Column(TypeName = "SMALLINT")]
 		public int discipline_id { get; set; }
+
 		[Required]
 		public string discipline_name { get; set; }
+
 		[Required]
 		[Column(TypeName = "TINYINT")]
 		public int number_of_lessons { get; set; }
