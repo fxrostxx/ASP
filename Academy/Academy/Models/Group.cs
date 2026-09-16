@@ -22,9 +22,11 @@ namespace Academy.Models
 		public int? learning_days { get; set; }
 
 		public TimeOnly? start_time { get; set; }
+
 		public DateOnly? start_date { get; set; }
 
 
 		public Direction Direction { get; set; }
+		ICollection<Student> Students { get; set; }
 	}
 }
