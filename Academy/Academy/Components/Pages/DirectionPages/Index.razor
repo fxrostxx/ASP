@@ -11,26 +11,26 @@
 <h1>Index</h1>
 
 <p>
-    <a href="directions/create">Create New</a>
+	<a href="directions/create">Create New</a>
 </p>
 
 <QuickGrid Class="table" Items="context.Directions">
-    <PropertyColumn Property="direction => direction.direction_name" />
+	<PropertyColumn Property="direction => direction.direction_name" />
 
-    <TemplateColumn Context="direction">
-        <a href="@($"directions/edit?direction_id={direction.direction_id}")">Edit</a> |
-        <a href="@($"directions/details?direction_id={direction.direction_id}")">Details</a> |
-        <a href="@($"directions/delete?direction_id={direction.direction_id}")">Delete</a>
-    </TemplateColumn>
+	<TemplateColumn Context="direction">
+		<a href="@($"directions/edit?direction_id={direction.direction_id}")">Edit</a> |
+		<a href="@($"directions/details?direction_id={direction.direction_id}")">Details</a> |
+		<a href="@($"directions/delete?direction_id={direction.direction_id}")">Delete</a>
+	</TemplateColumn>
 </QuickGrid>
 
 @code {
-    private AcademyContext context = default!;
+	private AcademyContext context = default!;
 
-    protected override void OnInitialized()
-    {
-        context = DbFactory.CreateDbContext();
-    }
+	protected override void OnInitialized()
+	{
+		context = DbFactory.CreateDbContext();
+	}
 
-    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+	public async ValueTask DisposeAsync() => await context.DisposeAsync();
 }
