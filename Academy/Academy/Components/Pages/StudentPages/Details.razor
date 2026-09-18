@@ -16,28 +16,36 @@
 	{
 		<h1>@student.FullName</h1>
 		<hr />
-		<dl class="row">
-			@* <dt class="col-sm-2">last_name</dt>
+		<div class="details">
+			<dl class="row">
+				@* <dt class="col-sm-2">last_name</dt>
 			<dd class="col-sm-10">@student.last_name</dd>
 			<dt class="col-sm-2">first_name</dt>
 			<dd class="col-sm-10">@student.first_name</dd>
 			<dt class="col-sm-2">middle_name</dt>
 			<dd class="col-sm-10">@student.middle_name</dd> *@
-			<dt class="col-sm-2">ID</dt>
-			<dd class="col-sm-10">@student.stud_id</dd>
-			<dt class="col-sm-2">birth_date</dt>
-			<dd class="col-sm-10">@student.birth_date</dd>
-			<dt class="col-sm-2">email</dt>
-			<dd class="col-sm-10">@student.email</dd>
-			<dt class="col-sm-2">phone</dt>
-			<dd class="col-sm-10">@student.phone</dd>
-			<dt class="col-sm-2">group</dt>
-			<dd class="col-sm-10">@group.group_name</dd>
-			@* <dt class="col-sm-2">photo</dt>
+				<dt class="col-sm-2">ID</dt>
+				<dd class="col-sm-10">@student.stud_id</dd>
+				<dt class="col-sm-2">birth_date</dt>
+				<dd class="col-sm-10">@student.birth_date</dd>
+				<dt class="col-sm-2">email</dt>
+				<dd class="col-sm-10">@student.email</dd>
+				<dt class="col-sm-2">phone</dt>
+				<dd class="col-sm-10">@student.phone</dd>
+				<dt class="col-sm-2">group</dt>
+				<dd class="col-sm-10">@group.group_name</dd>
+				@* <dt class="col-sm-2">photo</dt>
 			<dd class="col-sm-10">@student.photo</dd> *@
-		</dl>
+			</dl>
+			<div class="photo-container">
+				@if (student.photo != null)
+				{
+					<Photo Image="@student.photo" />
+				}
+			</div>
+		</div>
 		<div>
-			<a href="@($"/students/edit?stud_id={student.stud_id}")">Edit</a> |
+			<a href="@($"/students/edit?stud_id={student.stud_id}")" class="btn btn-primary">Edit</a> |
 			<a href="@($"/students")">Back to List</a>
 		</div>
 	}
