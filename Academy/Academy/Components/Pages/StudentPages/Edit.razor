@@ -24,12 +24,6 @@ else
 				<input type="hidden" name="Student.stud_id" value="@Student.stud_id" />
 				<div class="mb-3">
 					<span class="text-danger">*</span>
-					<label for="group" class="form-label">group:</label>
-					<InputNumber id="group" @bind-Value="Student.group" class="form-control" aria-required="true" />
-					<ValidationMessage For="() => Student.group" class="text-danger" />
-				</div>
-				<div class="mb-3">
-					<span class="text-danger">*</span>
 					<label for="last_name" class="form-label">last_name:</label>
 					<InputText id="last_name" @bind-Value="Student.last_name" class="form-control" aria-required="true" />
 					<ValidationMessage For="() => Student.last_name" class="text-danger" />
@@ -60,6 +54,22 @@ else
 					<label for="phone" class="form-label">phone:</label>
 					<InputText id="phone" @bind-Value="Student.phone" class="form-control" />
 					<ValidationMessage For="() => Student.phone" class="text-danger" />
+				</div>
+				<div class="mb-3">
+					<span class="text-danger">*</span>
+					<label for="group" class="form-label">group:</label>
+					<InputSelect id="group" @bind-Value="Student.group" class="form-control">
+						<option disabled selected>--- Choose group ---</option>
+						@using (AcademyContext context = DbFactory.CreateDbContext())
+						{
+							@foreach (Group group in context.Groups)
+							{
+								<option value="@group.group_id">@group.group_name</option>
+							}
+						}
+					</InputSelect>
+					@* <InputNumber id="group" @bind-Value="Student.group" class="form-control" aria-required="true" /> *@
+					<ValidationMessage For="() => Student.group" class="text-danger" />
 				</div>
 				@* <div class="mb-3">
 					<label for="photo" class="form-label">photo:</label>
