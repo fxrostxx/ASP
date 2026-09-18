@@ -1,4 +1,5 @@
 @page "/students/edit"
+@rendermode InteractiveServer
 @using Microsoft.EntityFrameworkCore
 @using Academy.Models
 @inject IDbContextFactory<AcademyContext> DbFactory
@@ -79,6 +80,7 @@ else
 						{
 							<Photo image="@Student.photo" />
 						}
+						<InputFile OnChange="LoadPhoto" />
 					</div>
 				</div>
 				@* <div class="mb-3">
@@ -102,6 +104,17 @@ else
 
 	[SupplyParameterFromForm]
 	private Student? Student { get; set; }
+
+	IBrowserFile URL { get; set; } = default!;
+	async Task LoadPhoto(InputFileChangeEventArgs e)
+	{
+		URL = e.File;
+		URL.OpenReadStream();
+		MemoryStream ms = new MemoryStream();
+		await URL.OpenReadStream().CopyToAsync(ms);
+		byte[] rawData = ms.ToArray();
+		Student.photo = rawData;
+	}
 
 	protected override async Task OnInitializedAsync()
 	{

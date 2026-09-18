@@ -3,6 +3,7 @@
 <img src="data:imager/png; base64, @Convert.ToBase64String(Image)" alt="Photo" />
 
 @code {
+	[Parameter]
 	public IBrowserFile URL { get; set; }
 
 	[Parameter]
