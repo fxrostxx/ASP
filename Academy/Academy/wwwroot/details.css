@@ -3,10 +3,13 @@
     justify-content: space-between;
 }
 
-.details > div {
-    width: 38%;
-}
+    .details > div {
+        width: 38%;
+    }
 
 .photo-container > img {
     width: 85%;
+    height: 67vh;
+    object-fit: contain;
+    border: solid 1px;
 }

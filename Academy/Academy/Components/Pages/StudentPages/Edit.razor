@@ -71,7 +71,6 @@ else
 									}
 								}
 							</InputSelect>
-							@* <InputNumber id="group" @bind-Value="Student.group" class="form-control" aria-required="true" /> *@
 							<ValidationMessage For="() => Student.group" class="text-danger" />
 						</div>
 					</div>
@@ -83,11 +82,6 @@ else
 						<InputFile OnChange="LoadPhoto" />
 					</div>
 				</div>
-				@* <div class="mb-3">
-					<label for="photo" class="form-label">photo:</label>
-					<InputText id="photo" @bind-Value="Student.photo" class="form-control" />
-					<ValidationMessage For="() => Student.photo" class="text-danger" />
-				</div> *@
 				<button type="submit" class="btn btn-primary">Save</button>
 			</EditForm>
 		</div>
@@ -109,11 +103,10 @@ else
 	async Task LoadPhoto(InputFileChangeEventArgs e)
 	{
 		URL = e.File;
-		URL.OpenReadStream();
+		// URL.OpenReadStream();
 		MemoryStream ms = new MemoryStream();
-		await URL.OpenReadStream().CopyToAsync(ms);
-		byte[] rawData = ms.ToArray();
-		Student.photo = rawData;
+		await URL.OpenReadStream(5 * 1024 * 1024).CopyToAsync(ms);
+		Student.photo = ms.ToArray();
 	}
 
 	protected override async Task OnInitializedAsync()
