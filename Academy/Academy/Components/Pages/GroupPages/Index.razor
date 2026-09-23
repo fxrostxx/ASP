@@ -6,13 +6,13 @@
 @inject IDbContextFactory<AcademyContext> DbFactory
 @inject NavigationManager NavigationManager
 
-<PageTitle>Index</PageTitle>
-
-<h1>Index</h1>
-
-<p>
-	<a href="groups/create">Create New</a>
-</p>
+<div class="controls">
+	<PageTitle>Index</PageTitle>
+	<h1>Groups</h1>
+	<p>
+		<a href="groups/create" class="btn btn-primary">Create New</a>
+	</p>
+</div>
 
 <QuickGrid Class="table" Items="groups">
 	@* <PropertyColumn Property="group => group.group_name" /> *@
