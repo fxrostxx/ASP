@@ -20,7 +20,7 @@
 		<a href="@($"groups/details?group_id={group.group_id}")">@group.group_name</a>
 	</TemplateColumn>
 	<PropertyColumn Property="group => group.Direction.direction_name" />
-	<PropertyColumn Property="group => group.learning_days" />
+	<PropertyColumn Property="group => new Week((int)(group.learning_days?? 0))" />
 	<PropertyColumn Property="group => group.start_time" />
 	<PropertyColumn Property="group => group.start_date" />
 
