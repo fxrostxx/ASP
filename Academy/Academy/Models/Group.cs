@@ -27,6 +27,6 @@ namespace Academy.Models
 
 
 		public Direction Direction { get; set; }
-		ICollection<Student> Students { get; set; }
+		public ICollection<Student> Students { get; set; }
 	}
 }
