@@ -19,7 +19,7 @@
 	<PropertyColumn Property="teacher => teacher.first_name" />
 	<PropertyColumn Property="teacher => teacher.middle_name" /> *@
 	<TemplateColumn Context="teacher">
-		<a href=@($"teachers/details?teacher_id={teacher.teacher_id}")">@teacher.FullName</a>
+		<a href=@($"teachers/details?teacher_id={teacher.teacher_id}") target="_blank">@teacher.FullName</a>
 	</TemplateColumn>
 	<PropertyColumn Property="teacher => teacher.birth_date" />
 	@* <PropertyColumn Property="teacher => teacher.email" />
