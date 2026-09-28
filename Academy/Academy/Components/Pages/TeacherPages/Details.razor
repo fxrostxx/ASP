@@ -42,7 +42,7 @@
 			@foreach (TeachersDisciplinesRelation tdr in teacher.DisciplinesRelations)
 			{
 				<li>
-					<a href="@($"disciplines/details?discipline_id={tdr.Discipline.discipline_id}")" target="_blank">@tdr.Discipline.discipline_name</a>
+					<a href="@($"disciplines/details?discipline_id={tdr.Discipline.discipline_name}")" target="_blank">@tdr.Discipline.discipline_name</a>
 				</li>
 			}
 		</ul>
