@@ -65,7 +65,7 @@ namespace ContosoUniversity.Data
 			context.SaveChanges();
 		}
 	}
-} 
+}
 #endif
 
 #if DB_INIT_2
@@ -398,5 +398,5 @@ namespace ContosoUniversity.Data
 			context.SaveChanges();
 		}
 	}
-}
+} 
 #endif

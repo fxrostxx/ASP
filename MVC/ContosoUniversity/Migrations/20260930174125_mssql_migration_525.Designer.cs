@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ContosoUniversity.Migrations
 {
     [DbContext(typeof(ContosoUniversityContext))]
-    [Migration("20260930171701_mssql_migration_928")]
-    partial class mssql_migration_928
+    [Migration("20260930174125_mssql_migration_525")]
+    partial class mssql_migration_525
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
