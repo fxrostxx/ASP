@@ -4,18 +4,17 @@
 	ViewData["Title"] = "Index";
 }
 
-<h1>Students</h1>
-
-<p>
-	<a asp-action="Create">Create New</a>
-</p>
-<form asp-action="Index" method="get">
-	<div>
-		<label>Search by name: <input type="search" name="SearchString" value="@ViewData["CurrentFilter"]" /></label>
-		<input type="submit" value="Search" class="btn btn-primary" />
-		<a asp-action="Index" class="btn btn-secondary">Reset</a>
-	</div>
-</form>
+<div class="controls">
+	<h1>Students</h1>
+	<form asp-action="Index" method="get">
+		<div>
+			<label>Search by name: <input type="search" name="SearchString" value="@ViewData["CurrentFilter"]" /></label>
+			<input type="submit" value="Search" class="btn btn-primary" />
+			<a asp-action="Index" class="btn btn-secondary">Reset</a>
+		</div>
+	</form>
+	<a asp-action="Create" class="btn btn-primary">Create New</a>
+</div>
 <table class="table">
 	<thead>
 		<tr>
