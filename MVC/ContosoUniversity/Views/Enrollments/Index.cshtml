@@ -1,4 +1,5 @@
-@model IEnumerable<ContosoUniversity.Models.Enrollment>
+@* @model IEnumerable<ContosoUniversity.Models.Enrollment> *@
+@model PaginatedList<Enrollment>
 
 @{
 	ViewData["Title"] = "Index";
@@ -12,20 +13,23 @@
 <table class="table">
 	<thead>
 		<tr>
-			<th>
+			@* <th>
 				@Html.DisplayNameFor(model => model.CourseID)
 			</th>
 			<th>
 				@Html.DisplayNameFor(model => model.StudentID)
+			</th> *@
+			<th>
+				Grade
+				@* @Html.DisplayNameFor(model => model.Grade) *@
 			</th>
 			<th>
-				@Html.DisplayNameFor(model => model.Grade)
+				Course
+				@* @Html.DisplayNameFor(model => model.Course) *@
 			</th>
 			<th>
-				@Html.DisplayNameFor(model => model.Course)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.Student)
+				Student
+				@* @Html.DisplayNameFor(model => model.Student) *@
 			</th>
 			<th></th>
 		</tr>
@@ -34,20 +38,20 @@
 		@foreach (var item in Model)
 		{
 			<tr>
-				<td>
+				@* <td>
 					@Html.DisplayFor(model => item.CourseID)
 				</td>
 				<td>
 					@Html.DisplayFor(model => item.StudentID)
-				</td>
+				</td> *@
 				<td>
 					@Html.DisplayFor(model => item.Grade)
 				</td>
 				<td>
-					@Html.DisplayFor(model => item.Course)
+					@Html.DisplayFor(model => item.Course.Title)
 				</td>
 				<td>
-					@Html.DisplayFor(model => item.Student)
+					@Html.DisplayFor(model => item.Student.ID)
 				</td>
 				<td>
 					<a asp-action="Edit" asp-route-id="@item.EnrollmentID">Edit</a> |
@@ -58,3 +62,30 @@
 		}
 	</tbody>
 </table>
+
+@{
+	string prevDisabled = Model.HasPreviousPage ? "" : "disabled";
+	string nextDisabled = Model.HasNextPage ? "" : "disabled";
+}
+
+<div class="pagination-controls">
+	<a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex - 1)" asp-route-currentFilter="@ViewData["CurrentFilter"]" class="btn @prevDisabled">
+		Previous
+	</a>
+	<div class="pages">
+		@for (int i = 0; i < Model.TotalPages; ++i)
+		{
+			@if (i + 1 == Model.PageIndex)
+			{
+				<a asp-action="Index" asp-route-pageNumber="@(i + 1)"><div class="page current-page">@(i + 1)</div></a>
+			}
+			else
+			{
+				<a asp-action="Index" asp-route-pageNumber="@(i + 1)"><div class="page">@(i + 1)</div></a>
+			}
+		}
+	</div>
+	<a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex + 1)" asp-route-currentFilter="@ViewData["CurrentFilter"]" class="btn @nextDisabled">
+		Next
+	</a>
+</div>
