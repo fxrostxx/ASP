@@ -7,3 +7,20 @@
     justify-content: space-between;
     align-items: center;
 }
+
+.pages, .page {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.page {
+    width: 32px;
+    height: 32px;
+    margin: 8px;
+    border: solid 1px blue;
+}
+
+.current-page {
+    box-shadow: 0px 0px 5px 0px blue;
+}
