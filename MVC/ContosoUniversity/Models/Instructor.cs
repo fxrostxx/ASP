@@ -3,31 +3,33 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ContosoUniversity.Models
 {
-	public class Student
+	public class Instructor
 	{
 		public int ID { get; set; }
 
 		[Required]
+		[StringLength(50)]
 		[DisplayName("Last name")]
 		public string LastName { get; set; }
 
 		[Required]
+		[StringLength(50)]
 		[DisplayName("First name")]
 		public string FirstName { get; set; }
 
 		[DataType(DataType.Date)]
 		[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-		[Display(Name = "Enrollment date")]
-		public DateTime EnrollmentDate { get; set; }
+		[Display(Name = "Hire date")]
+		public DateTime HireDate { get; set; }
 
 
-		[Display(Name = "Student")]
+		[Display(Name = "Instructor")]
 		public string FullName
 		{
 			get => $"{LastName} {FirstName}";
 		}
 
 
-		public ICollection<Enrollment> Enrollments { get; set; }
+		// TODO: Navigation Properties
 	}
 }
