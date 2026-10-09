@@ -20,7 +20,10 @@ namespace ContosoUniversity.Models
 		[DisplayName("Start date")]
 		public DateTime StartDate { get; set; }
 
+		public int? InstructorID { get; set; }
 
-		// TODO: Navigation Properties
+
+		public Instructor Administrator { get; set; }
+		public ICollection<Course> Courses { get; set; }
 	}
 }

@@ -11,6 +11,6 @@ namespace ContosoUniversity.Models
 		public string Location { get; set; }
 
 
-		public Instructor instructor { get; set; }
+		public Instructor Instructor { get; set; }
 	}
 }
