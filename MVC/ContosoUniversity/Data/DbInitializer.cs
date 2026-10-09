@@ -156,6 +156,7 @@ namespace ContosoUniversity.Data
 			};
 
 			context.AddRange(students);
+			context.SaveChanges();
 
 			var abercrombie = new Instructor
 			{
@@ -202,6 +203,7 @@ namespace ContosoUniversity.Data
 			};
 
 			context.AddRange(instructors);
+			context.SaveChanges();
 
 			var officeAssignments = new OfficeAssignment[]
 			{
@@ -217,6 +219,7 @@ namespace ContosoUniversity.Data
 			};
 
 			context.AddRange(officeAssignments);
+			context.SaveChanges();
 
 			var english = new Department
 			{
@@ -259,6 +262,7 @@ namespace ContosoUniversity.Data
 			};
 
 			context.AddRange(departments);
+			context.SaveChanges();
 
 			var chemistry = new Course
 			{
@@ -335,6 +339,7 @@ namespace ContosoUniversity.Data
 			};
 
 			context.AddRange(courses);
+			context.SaveChanges();
 
 			var enrollments = new Enrollment[]
 			{
