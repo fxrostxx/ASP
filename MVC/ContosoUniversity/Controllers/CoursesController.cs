@@ -2,148 +2,161 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ContosoUniversity.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 public class CoursesController : Controller
 {
-    private readonly ContosoUniversityContext _context;
+	private readonly ContosoUniversityContext _context;
 
-    public CoursesController(ContosoUniversityContext context)
-    {
-        _context = context;
-    }
+	public CoursesController(ContosoUniversityContext context)
+	{
+		_context = context;
+	}
 
-    // GET: COURSES
-    public async Task<IActionResult> Index()    
-    {
-        return View(await _context.Courses.ToListAsync());
-    }
+	// GET: COURSES
+	public async Task<IActionResult> Index()
+	{
+		return View(await _context.Courses.ToListAsync());
+	}
 
-    // GET: COURSES/Details/5
-    public async Task<IActionResult> Details(int? courseid)
-    {
-        if (courseid == null)
-        {
-            return NotFound();
-        }
+	// GET: COURSES/Details/5
+	public async Task<IActionResult> Details(int? courseid)
+	{
+		if (courseid == null)
+		{
+			return NotFound();
+		}
 
-        var course = await _context.Courses
-            .FirstOrDefaultAsync(m => m.CourseID == courseid);
-        if (course == null)
-        {
-            return NotFound();
-        }
+		var course = await _context.Courses
+			.FirstOrDefaultAsync(m => m.CourseID == courseid);
+		if (course == null)
+		{
+			return NotFound();
+		}
 
-        return View(course);
-    }
+		return View(course);
+	}
 
-    // GET: COURSES/Create
-    public IActionResult Create()
-    {
-        return View();
-    }
+	// GET: COURSES/Create
+	public IActionResult Create()
+	{
+		PopulateDepartemntsDropDownList();
+		return View();
+	}
 
-    // POST: COURSES/Create
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("CourseID,Title,Credits,Enrollments")] Course course)
-    {
-        if (ModelState.IsValid)
-        {
-            _context.Add(course);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-        return View(course);
-    }
+	// POST: COURSES/Create
+	// To protect from overposting attacks, enable the specific properties you want to bind to.
+	// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+	[HttpPost]
+	[ValidateAntiForgeryToken]
+	public async Task<IActionResult> Create([Bind("CourseID,Title,Credits,DepartmentID")] Course course)
+	{
+		if (ModelState.IsValid)
+		{
+			_context.Add(course);
+			await _context.SaveChangesAsync();
+			return RedirectToAction(nameof(Index));
+		}
+		return View(course);
+	}
 
-    // GET: COURSES/Edit/5
-    public async Task<IActionResult> Edit(int? courseid)
-    {
-        if (courseid == null)
-        {
-            return NotFound();
-        }
+	// GET: COURSES/Edit/5
+	public async Task<IActionResult> Edit(int? courseid)
+	{
+		if (courseid == null)
+		{
+			return NotFound();
+		}
 
-        var course = await _context.Courses.FindAsync(courseid);
-        if (course == null)
-        {
-            return NotFound();
-        }
-        return View(course);
-    }
+		var course = await _context.Courses.FindAsync(courseid);
+		if (course == null)
+		{
+			return NotFound();
+		}
+		PopulateDepartemntsDropDownList(course.DepartmentID);
+		return View(course);
+	}
 
-    // POST: COURSES/Edit/5
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? courseid, [Bind("CourseID,Title,Credits,Enrollments")] Course course)
-    {
-        if (courseid != course.CourseID)
-        {
-            return NotFound();
-        }
+	// POST: COURSES/Edit/5
+	// To protect from overposting attacks, enable the specific properties you want to bind to.
+	// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+	[HttpPost]
+	[ValidateAntiForgeryToken]
+	public async Task<IActionResult> Edit(int? courseid, [Bind("CourseID,Title,Credits,Enrollments")] Course course)
+	{
+		if (courseid != course.CourseID)
+		{
+			return NotFound();
+		}
 
-        if (ModelState.IsValid)
-        {
-            try
-            {
-                _context.Update(course);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CourseExists(course.CourseID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            return RedirectToAction(nameof(Index));
-        }
-        return View(course);
-    }
+		if (ModelState.IsValid)
+		{
+			try
+			{
+				_context.Update(course);
+				await _context.SaveChangesAsync();
+			}
+			catch (DbUpdateConcurrencyException)
+			{
+				if (!CourseExists(course.CourseID))
+				{
+					return NotFound();
+				}
+				else
+				{
+					throw;
+				}
+			}
+			return RedirectToAction(nameof(Index));
+		}
+		PopulateDepartemntsDropDownList(course.DepartmentID);
+		return View(course);
+	}
 
-    // GET: COURSES/Delete/5
-    public async Task<IActionResult> Delete(int? courseid)
-    {
-        if (courseid == null)
-        {
-            return NotFound();
-        }
+	void PopulateDepartemntsDropDownList(object selectedDepartments = null)
+	{
+		IQueryable<Department> departments =
+			from department in _context.Departments
+			orderby department.Name
+			select department;
+		ViewBag.DepartmentID = new SelectList(departments.AsNoTracking(), "DepartmentID", "Name", departments);
+	}
 
-        var course = await _context.Courses
-            .FirstOrDefaultAsync(m => m.CourseID == courseid);
-        if (course == null)
-        {
-            return NotFound();
-        }
+	// GET: COURSES/Delete/5
+	public async Task<IActionResult> Delete(int? courseid)
+	{
+		if (courseid == null)
+		{
+			return NotFound();
+		}
 
-        return View(course);
-    }
+		var course = await _context.Courses
+			.FirstOrDefaultAsync(m => m.CourseID == courseid);
+		if (course == null)
+		{
+			return NotFound();
+		}
 
-    // POST: COURSES/Delete/5
-    [HttpPost, ActionName("Delete")]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(int? courseid)
-    {
-        var course = await _context.Courses.FindAsync(courseid);
-        if (course != null)
-        {
-            _context.Courses.Remove(course);
-        }
+		return View(course);
+	}
 
-        await _context.SaveChangesAsync();
-        return RedirectToAction(nameof(Index));
-    }
+	// POST: COURSES/Delete/5
+	[HttpPost, ActionName("Delete")]
+	[ValidateAntiForgeryToken]
+	public async Task<IActionResult> DeleteConfirmed(int? courseid)
+	{
+		var course = await _context.Courses.FindAsync(courseid);
+		if (course != null)
+		{
+			_context.Courses.Remove(course);
+		}
 
-    private bool CourseExists(int? courseid)
-    {
-        return _context.Courses.Any(e => e.CourseID == courseid);
-    }
+		await _context.SaveChangesAsync();
+		return RedirectToAction(nameof(Index));
+	}
+
+	private bool CourseExists(int? courseid)
+	{
+		return _context.Courses.Any(e => e.CourseID == courseid);
+	}
 }

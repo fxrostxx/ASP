@@ -18,9 +18,6 @@
 			<th>
 				@Html.DisplayNameFor(model => model.Credits)
 			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.Enrollments)
-			</th>
 			<th></th>
 		</tr>
 	</thead>
@@ -33,9 +30,6 @@
 				</td>
 				<td>
 					@Html.DisplayFor(model => item.Credits)
-				</td>
-				<td>
-					@Html.DisplayFor(model => item.Enrollments)
 				</td>
 				<td>
 					<a asp-action="Edit" asp-route-id="@item.CourseID">Edit</a> |
