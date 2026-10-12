@@ -115,3 +115,25 @@
 		</tbody>
 	</table>
 }
+
+@if (Model.Enrollments != null)
+{
+	<h3>Students who have completed the course:</h3>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Student</th>
+				<th>Mark</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (Enrollment enrollment in Model.Enrollments)
+			{
+				<tr>
+					<td>@enrollment.Student.FullName</td>
+					<td>@enrollment.Grade</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}

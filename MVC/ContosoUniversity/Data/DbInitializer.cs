@@ -65,7 +65,7 @@ namespace ContosoUniversity.Data
 			context.SaveChanges();
 		}
 	}
-}
+} 
 #endif
 
 #if DB_INIT_2
@@ -401,7 +401,45 @@ namespace ContosoUniversity.Data
 
 			context.AddRange(enrollments);
 			context.SaveChanges();
+
+			CourseAssignment[] courseInstructors = new CourseAssignment[]
+			{
+				new CourseAssignment {
+					CourseID = courses.Single(c => c.Title == "Chemistry" ).CourseID,
+					InstructorID = instructors.Single(i => i.LastName == "Kapoor").ID
+					},
+				new CourseAssignment {
+					CourseID = courses.Single(c => c.Title == "Chemistry" ).CourseID,
+					InstructorID = instructors.Single(i => i.LastName == "Harui").ID
+					},
+				new CourseAssignment {
+					CourseID = courses.Single(c => c.Title == "Microeconomics" ).CourseID,
+					InstructorID = instructors.Single(i => i.LastName == "Zheng").ID
+					},
+				new CourseAssignment {
+					CourseID = courses.Single(c => c.Title == "Macroeconomics" ).CourseID,
+					InstructorID = instructors.Single(i => i.LastName == "Zheng").ID
+					},
+				new CourseAssignment {
+					CourseID = courses.Single(c => c.Title == "Calculus" ).CourseID,
+					InstructorID = instructors.Single(i => i.LastName == "Fakhouri").ID
+					},
+				new CourseAssignment {
+					CourseID = courses.Single(c => c.Title == "Trigonometry" ).CourseID,
+					InstructorID = instructors.Single(i => i.LastName == "Harui").ID
+					},
+				new CourseAssignment {
+					CourseID = courses.Single(c => c.Title == "Composition" ).CourseID,
+					InstructorID = instructors.Single(i => i.LastName == "Abercrombie").ID
+					},
+				new CourseAssignment {
+					CourseID = courses.Single(c => c.Title == "Literature" ).CourseID,
+					InstructorID = instructors.Single(i => i.LastName == "Abercrombie").ID
+					},
+			};
+			context.AddRange(courseInstructors);
+			context.SaveChanges();
 		}
 	}
-} 
+}
 #endif
