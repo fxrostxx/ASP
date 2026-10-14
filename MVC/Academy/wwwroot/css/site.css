@@ -1,0 +1,53 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+.search-input {
+    max-width: 300px;
+}
+
+.filter-select {
+    width: auto;
+    max-width: 300px;
+}
+
+.edit-form {
+    max-width: 600px;
+}
+
+.person-photo {
+    width: 95px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+.selected-row {
+    background: #e8f2ff;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.input-validation-error {
+    border-color: #dc3545;
+}
+
+.related-list {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #ddd;
+}

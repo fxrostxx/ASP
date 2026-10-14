@@ -1,0 +1,63 @@
+@model PaginatedList<Student>
+@{
+	ViewData["Title"] = "Студенты";
+}
+<h1>Студенты</h1>
+<p><a asp-action="Create" class="btn btn-success">Добавить студента</a> <a asp-action="Index" asp-route-showAll="true" class="btn btn-outline-primary">Показать всех</a></p>
+<form method="get" asp-action="Index" class="d-flex flex-wrap gap-2 mb-3">
+	<input type="hidden" name="showAll" value="@ViewData["ShowAll"]" />
+	<select name="directionId" asp-items="ViewBag.Directions" class="form-select filter-select" aria-label="Направление" onchange="document.getElementById('group-filter').value='';this.form.submit();"><option value="">Все направления</option></select>
+	<select id="group-filter" name="groupId" asp-items="ViewBag.Groups" class="form-select filter-select" aria-label="Группа"><option value="">Все группы</option></select>
+	<input type="hidden" name="sortOrder" value="@ViewData["CurrentSort"]" />
+	<input class="form-control search-input" type="search" name="searchString" value="@ViewData["CurrentFilter"]" placeholder="Поиск" aria-label="Поиск" />
+	<button type="submit" class="btn btn-primary">Найти</button>
+	<a asp-action="Index" class="btn btn-outline-secondary">Сбросить</a>
+</form>
+@if (!(bool)ViewData["HasFilter"])
+{
+	<p class="alert alert-info">Выберите группу или направление, введите имя для поиска либо нажмите «Показать всех».</p>
+}
+<div class="table-responsive">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Фото</th>
+				<th><a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-directionId="@ViewData["DirectionId"]" asp-route-groupId="@ViewData["GroupId"]" asp-route-showAll="@ViewData["ShowAll"]">ФИО</a></th>
+				<th><a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-directionId="@ViewData["DirectionId"]" asp-route-groupId="@ViewData["GroupId"]" asp-route-showAll="@ViewData["ShowAll"]">Возраст</a></th>
+				<th>Группа</th>
+				<th><a asp-action="Index" asp-route-sortOrder="@ViewData["DirectionSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-directionId="@ViewData["DirectionId"]" asp-route-groupId="@ViewData["GroupId"]" asp-route-showAll="@ViewData["ShowAll"]">Направление</a></th>
+				<th>Действия</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (Student item in Model)
+			{
+				<tr data-record="@item.stud_id">
+					<td><partial name="_Photo" model="item" /></td>
+					<td>@item.FullName</td>
+					<td>@item.Age</td>
+					<td><a asp-controller="Groups" asp-action="Details" asp-route-id="@item.group">@item.Group.group_name.Trim()</a></td>
+					<td>@item.Group.Direction.direction_name</td>
+					<td><a asp-action="Details" asp-route-id="@item.stud_id">Подробнее</a> | <a asp-action="Edit" asp-route-id="@item.stud_id">Изменить</a> | <a asp-action="Delete" asp-route-id="@item.stud_id">Удалить</a></td>
+				</tr>
+			}
+			@if (Model.Count == 0)
+			{
+				<tr><td colspan="6">@((bool)ViewData["HasFilter"] ? "Записи не найдены." : "Таблица пуста: выберите условия поиска.")</td></tr>
+			}
+		</tbody>
+	</table>
+</div>
+@{
+	string prevDisabled = Model.HasPreviousPage ? "" : "disabled";
+	string nextDisabled = Model.HasNextPage ? "" : "disabled";
+}
+<div class="pagination-controls d-flex flex-wrap gap-2 align-items-center">
+	<a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex - 1)" asp-route-sortOrder="@ViewData["CurrentSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-directionId="@ViewData["DirectionId"]" asp-route-groupId="@ViewData["GroupId"]" asp-route-showAll="@ViewData["ShowAll"]" class="btn btn-outline-primary @prevDisabled">Назад</a>
+	@for (int i = 1; i <= Model.TotalPages; i++)
+	{
+		string currentPage = i == Model.PageIndex ? "btn-primary" : "btn-outline-primary";
+		<a asp-action="Index" asp-route-pageNumber="@i" asp-route-sortOrder="@ViewData["CurrentSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-directionId="@ViewData["DirectionId"]" asp-route-groupId="@ViewData["GroupId"]" asp-route-showAll="@ViewData["ShowAll"]" class="btn @currentPage">@i</a>
+	}
+	<a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex + 1)" asp-route-sortOrder="@ViewData["CurrentSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" asp-route-directionId="@ViewData["DirectionId"]" asp-route-groupId="@ViewData["GroupId"]" asp-route-showAll="@ViewData["ShowAll"]" class="btn btn-outline-primary @nextDisabled">Вперед</a>
+</div>

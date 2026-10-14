@@ -1,0 +1,26 @@
+@model Discipline
+@{
+	ViewData["Title"] = "Подробная информация";
+}
+<h1>Подробная информация</h1>
+<dl class="row">
+	<dt class="col-sm-3">Дисциплина</dt>
+	<dd class="col-sm-9">@Model.discipline_name</dd>
+	<dt class="col-sm-3">Количество занятий</dt>
+	<dd class="col-sm-9">@Model.number_of_lessons</dd>
+</dl>
+<p><a asp-action="Edit" asp-route-id="@Model.discipline_id" class="btn btn-primary">Изменить</a> <a asp-action="Index" class="btn btn-outline-secondary">К списку</a></p>
+<h2>Преподаватели дисциплины</h2>
+<table class="table table-striped">
+	<thead><tr><th>Преподаватель</th><th>Стаж</th><th></th></tr></thead>
+	<tbody>
+		@foreach (Teacher teacher in (Model.TeachersRelations.Select(r => r.Teacher)).OrderBy(t => t.last_name).ThenBy(t => t.first_name))
+		{
+			<tr><td>@teacher.FullName</td><td>@teacher.Experience</td><td><a asp-controller="Teachers" asp-action="Details" asp-route-id="@teacher.teacher_id">Подробнее</a></td></tr>
+		}
+		@if (!(Model.TeachersRelations.Select(r => r.Teacher)).Any())
+		{
+			<tr><td colspan="3" class="text-muted">Преподавателей нет.</td></tr>
+		}
+	</tbody>
+</table>

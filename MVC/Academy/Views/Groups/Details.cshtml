@@ -1,0 +1,32 @@
+@model Group
+@{
+	ViewData["Title"] = "Подробная информация";
+}
+<h1>Подробная информация</h1>
+<dl class="row">
+	<dt class="col-sm-3">Группа</dt>
+	<dd class="col-sm-9">@Model.group_name.Trim()</dd>
+	<dt class="col-sm-3">Направление</dt>
+	<dd class="col-sm-9"><a asp-controller="Directions" asp-action="Details" asp-route-id="@Model.direction">@Model.Direction.direction_name</a></dd>
+	<dt class="col-sm-3">Дни занятий</dt>
+	<dd class="col-sm-9">@Model.LearningDaysText</dd>
+	<dt class="col-sm-3">Время начала</dt>
+	<dd class="col-sm-9">@(Model.start_time?.ToString("HH:mm") ?? "-")</dd>
+	<dt class="col-sm-3">Дата начала</dt>
+	<dd class="col-sm-9">@(Model.start_date?.ToString("dd.MM.yyyy") ?? "-")</dd>
+</dl>
+<p><a asp-action="Edit" asp-route-id="@Model.group_id" class="btn btn-primary">Изменить</a> <a asp-action="Index" class="btn btn-outline-secondary">К списку</a></p>
+<h2>Студенты группы</h2>
+<table class="table table-striped">
+	<thead><tr><th>Студент</th><th>Возраст</th><th></th></tr></thead>
+	<tbody>
+		@foreach (Student student in (Model.Students))
+		{
+			<tr><td>@student.FullName</td><td>@student.Age</td><td><a asp-controller="Students" asp-action="Details" asp-route-id="@student.stud_id">Подробнее</a></td></tr>
+		}
+		@if (!(Model.Students).Any())
+		{
+			<tr><td colspan="3" class="text-muted">Студентов нет.</td></tr>
+		}
+	</tbody>
+</table>

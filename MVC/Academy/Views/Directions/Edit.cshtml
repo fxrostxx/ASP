@@ -1,0 +1,15 @@
+@model Direction
+@{
+	ViewData["Title"] = "Редактирование направления";
+}
+<h1>Редактирование направления</h1>
+<form asp-action="Edit" asp-route-id="@Model.direction_id" method="post" class="edit-form">
+	<div asp-validation-summary="All" class="text-danger"></div>
+	<input type="hidden" asp-for="direction_id" />
+	<div class="mb-3"><label asp-for="direction_name" class="form-label"></label><input asp-for="direction_name" class="form-control" /><span asp-validation-for="direction_name" class="text-danger"></span></div>
+	<button type="submit" class="btn btn-primary">Сохранить</button>
+	<a asp-action="Index" class="btn btn-outline-secondary">Отмена</a>
+</form>
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

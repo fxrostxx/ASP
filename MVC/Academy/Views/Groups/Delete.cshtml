@@ -1,0 +1,23 @@
+@model Group
+@{
+	ViewData["Title"] = "Удаление группы";
+}
+<h1>Удаление группы</h1>
+<p>Удалить эту запись?</p>
+<div asp-validation-summary="All" class="text-danger"></div>
+<dl class="row">
+	<dt class="col-sm-3">Группа</dt>
+	<dd class="col-sm-9">@Model.group_name.Trim()</dd>
+	<dt class="col-sm-3">Направление</dt>
+	<dd class="col-sm-9"><a asp-controller="Directions" asp-action="Details" asp-route-id="@Model.direction">@Model.Direction.direction_name</a></dd>
+	<dt class="col-sm-3">Дни занятий</dt>
+	<dd class="col-sm-9">@Model.LearningDaysText</dd>
+	<dt class="col-sm-3">Время начала</dt>
+	<dd class="col-sm-9">@(Model.start_time?.ToString("HH:mm") ?? "-")</dd>
+	<dt class="col-sm-3">Дата начала</dt>
+	<dd class="col-sm-9">@(Model.start_date?.ToString("dd.MM.yyyy") ?? "-")</dd>
+</dl>
+<form asp-action="Delete" asp-route-id="@Model.group_id" method="post">
+	<button type="submit" class="btn btn-danger">Удалить</button>
+	<a asp-action="Index" class="btn btn-outline-secondary">Отмена</a>
+</form>

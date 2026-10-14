@@ -1,0 +1,25 @@
+@model Student
+@{
+	ViewData["Title"] = "Подробная информация";
+}
+<h1>Подробная информация</h1>
+<div class="mb-3"><partial name="_Photo" model="Model" /></div>
+<dl class="row">
+	<dt class="col-sm-3">ФИО</dt>
+	<dd class="col-sm-9">@Model.FullName</dd>
+	<dt class="col-sm-3">Дата рождения</dt>
+	<dd class="col-sm-9">@Model.birth_date.ToString("dd.MM.yyyy")</dd>
+	<dt class="col-sm-3">Возраст</dt>
+	<dd class="col-sm-9">@Model.Age</dd>
+	<dt class="col-sm-3">Электронная почта</dt>
+	<dd class="col-sm-9">@(Model.email ?? "-")</dd>
+	<dt class="col-sm-3">Телефон</dt>
+	<dd class="col-sm-9">@(Model.phone ?? "-")</dd>
+</dl>
+<dl class="row">
+	<dt class="col-sm-3">Группа</dt>
+	<dd class="col-sm-9"><a asp-controller="Groups" asp-action="Details" asp-route-id="@Model.group">@Model.Group.group_name.Trim()</a></dd>
+	<dt class="col-sm-3">Направление</dt>
+	<dd class="col-sm-9"><a asp-controller="Directions" asp-action="Details" asp-route-id="@Model.Group.direction">@Model.Group.Direction.direction_name</a></dd>
+</dl>
+<p><a asp-action="Edit" asp-route-id="@Model.stud_id" class="btn btn-primary">Изменить</a> <a asp-action="Index" class="btn btn-outline-secondary">К списку</a></p>

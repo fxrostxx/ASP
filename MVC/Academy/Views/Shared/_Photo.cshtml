@@ -1,0 +1,26 @@
+@model Human
+@if (Model.photo != null && Model.photo.Length > 0)
+{
+	string contentType = "image/jpeg";
+	if (Model.photo.Length >= 4 && Model.photo[0] == 137 && Model.photo[1] == 80)
+	{
+		contentType = "image/png";
+	}
+	else if (Model.photo.Length >= 3 && Model.photo[0] == 71 && Model.photo[1] == 73 && Model.photo[2] == 70)
+	{
+		contentType = "image/gif";
+	}
+	else if (Model.photo.Length >= 2 && Model.photo[0] == 66 && Model.photo[1] == 77)
+	{
+		contentType = "image/bmp";
+	}
+	else if (Model.photo.Length >= 12 && Model.photo[0] == 82 && Model.photo[1] == 73 && Model.photo[8] == 87 && Model.photo[9] == 69)
+	{
+		contentType = "image/webp";
+	}
+	<img class="person-photo" src="data:@(contentType);base64,@(Convert.ToBase64String(Model.photo))" alt="Фото: @Model.FullName" />
+}
+else
+{
+	<span class="text-muted">Нет фото</span>
+}

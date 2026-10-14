@@ -1,0 +1,26 @@
+@model Group
+@{
+	ViewData["Title"] = "Добавление группы";
+}
+<h1>Добавление группы</h1>
+<form asp-action="Create" method="post" class="edit-form">
+	<div asp-validation-summary="All" class="text-danger"></div>
+	<input type="hidden" asp-for="group_id" />
+	<div class="mb-3"><label asp-for="group_name" class="form-label"></label><input asp-for="group_name" class="form-control" /><span asp-validation-for="group_name" class="text-danger"></span></div>
+	<div class="mb-3"><label asp-for="direction" class="form-label"></label><select asp-for="direction" asp-items="ViewBag.Directions" class="form-select"><option value="">Выберите направление</option></select><span asp-validation-for="direction" class="text-danger"></span></div>
+	<div class="mb-3"><label asp-for="start_date" class="form-label"></label><input asp-for="start_date" type="date" class="form-control" /><span asp-validation-for="start_date" class="text-danger"></span></div>
+	<div class="mb-3"><label asp-for="start_time" class="form-label"></label><input asp-for="start_time" type="time" class="form-control" /><span asp-validation-for="start_time" class="text-danger"></span></div>
+	<fieldset class="mb-3">
+		<legend class="fs-6">Дни занятий</legend>
+		@for (int day = 0; day < Weekdays.Names.Length; day++)
+		{
+			bool selected = ((Model.learning_days ?? 0) & (1 << day)) != 0;
+			<label class="me-3"><input type="checkbox" name="selectedDays" value="@day" checked="@selected" /> @Weekdays.Names[day]</label>
+		}
+	</fieldset>
+	<button type="submit" class="btn btn-primary">Сохранить</button>
+	<a asp-action="Index" class="btn btn-outline-secondary">Отмена</a>
+</form>
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

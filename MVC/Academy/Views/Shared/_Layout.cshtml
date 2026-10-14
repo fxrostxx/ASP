@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>@ViewData["Title"] - Academy</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+	<header class="border-bottom mb-4">
+		<nav class="container py-3 d-flex flex-wrap gap-3 align-items-center">
+			<a class="navbar-brand fw-bold" asp-controller="Home" asp-action="Index">Academy</a>
+			<a asp-controller="Directions" asp-action="Index">Направления</a>
+			<a asp-controller="Groups" asp-action="Index">Группы</a>
+			<a asp-controller="Students" asp-action="Index">Студенты</a>
+			<a asp-controller="Disciplines" asp-action="Index">Дисциплины</a>
+			<a asp-controller="Teachers" asp-action="Index">Преподаватели</a>
+		</nav>
+	</header>
+	<main class="container pb-5">@RenderBody()</main>
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

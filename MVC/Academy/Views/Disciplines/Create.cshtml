@@ -1,0 +1,30 @@
+@model Discipline
+@{
+	ViewData["Title"] = "Добавление дисциплины";
+}
+<h1>Добавление дисциплины</h1>
+<form asp-action="Create" method="post" class="edit-form">
+	<div asp-validation-summary="All" class="text-danger"></div>
+	<input type="hidden" asp-for="discipline_id" />
+	<div class="mb-3"><label asp-for="discipline_name" class="form-label"></label><input asp-for="discipline_name" class="form-control" /><span asp-validation-for="discipline_name" class="text-danger"></span></div>
+	<div class="mb-3"><label asp-for="number_of_lessons" class="form-label"></label><input asp-for="number_of_lessons" type="number" min="1" max="255" class="form-control" /><span asp-validation-for="number_of_lessons" class="text-danger"></span></div>
+	<fieldset class="mb-3">
+		<legend class="fs-6">Преподаватели дисциплины</legend>@foreach (SelectListItem option in (IEnumerable<SelectListItem>)ViewBag.Relations)
+		{
+			string inputId = $"{ViewData["RelationField"]}_{option.Value}";
+			<div class="form-check">
+				<input class="form-check-input" id="@inputId" type="checkbox" name="@ViewData["RelationField"]" value="@option.Value" checked="@option.Selected" />
+				<label class="form-check-label" for="@inputId">@option.Text</label>
+			</div>
+		}
+		@if (!((IEnumerable<SelectListItem>)ViewBag.Relations).Any())
+		{
+			<p class="text-muted">Нет записей для выбора.</p>
+		}
+	</fieldset>
+	<button type="submit" class="btn btn-primary">Сохранить</button>
+	<a asp-action="Index" class="btn btn-outline-secondary">Отмена</a>
+</form>
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

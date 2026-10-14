@@ -1,0 +1,12 @@
+@model Direction
+@{
+	ViewData["Title"] = "Удаление направления";
+}
+<h1>Удаление направления</h1>
+<p>Удалить эту запись?</p>
+<div asp-validation-summary="All" class="text-danger"></div>
+<dl class="row"><dt class="col-sm-3">Направление</dt><dd class="col-sm-9">@Model.direction_name</dd></dl>
+<form asp-action="Delete" asp-route-id="@Model.direction_id" method="post">
+	<button type="submit" class="btn btn-danger">Удалить</button>
+	<a asp-action="Index" class="btn btn-outline-secondary">Отмена</a>
+</form>

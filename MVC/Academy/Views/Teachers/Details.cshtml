@@ -1,0 +1,41 @@
+@model Teacher
+@{
+	ViewData["Title"] = "Подробная информация";
+}
+<h1>Подробная информация</h1>
+<div class="mb-3"><partial name="_Photo" model="Model" /></div>
+<dl class="row">
+	<dt class="col-sm-3">ФИО</dt>
+	<dd class="col-sm-9">@Model.FullName</dd>
+	<dt class="col-sm-3">Дата рождения</dt>
+	<dd class="col-sm-9">@Model.birth_date.ToString("dd.MM.yyyy")</dd>
+	<dt class="col-sm-3">Возраст</dt>
+	<dd class="col-sm-9">@Model.Age</dd>
+	<dt class="col-sm-3">Электронная почта</dt>
+	<dd class="col-sm-9">@(Model.email ?? "-")</dd>
+	<dt class="col-sm-3">Телефон</dt>
+	<dd class="col-sm-9">@(Model.phone ?? "-")</dd>
+</dl>
+<dl class="row">
+	<dt class="col-sm-3">Начало преподавания</dt>
+	<dd class="col-sm-9">@Model.work_since.ToString("dd.MM.yyyy")</dd>
+	<dt class="col-sm-3">Стаж</dt>
+	<dd class="col-sm-9">@Model.Experience</dd>
+	<dt class="col-sm-3">Ставка</dt>
+	<dd class="col-sm-9">@Model.rate.ToString("0.00")</dd>
+</dl>
+<p><a asp-action="Edit" asp-route-id="@Model.teacher_id" class="btn btn-primary">Изменить</a> <a asp-action="Index" class="btn btn-outline-secondary">К списку</a></p>
+<h2>Дисциплины преподавателя</h2>
+<table class="table table-striped">
+	<thead><tr><th>Дисциплина</th><th>Количество занятий</th><th></th></tr></thead>
+	<tbody>
+		@foreach (Discipline discipline in (Model.DisciplinesRelations.Select(r => r.Discipline)).OrderBy(d => d.discipline_name))
+		{
+			<tr><td>@discipline.discipline_name</td><td>@discipline.number_of_lessons</td><td><a asp-controller="Disciplines" asp-action="Details" asp-route-id="@discipline.discipline_id">Подробнее</a></td></tr>
+		}
+		@if (!(Model.DisciplinesRelations.Select(r => r.Discipline)).Any())
+		{
+			<tr><td colspan="3" class="text-muted">Дисциплин нет.</td></tr>
+		}
+	</tbody>
+</table>

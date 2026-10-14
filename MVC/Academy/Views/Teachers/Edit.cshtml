@@ -1,0 +1,47 @@
+@model Teacher
+@{
+	ViewData["Title"] = "Редактирование преподавателя";
+}
+<h1>Редактирование преподавателя</h1>
+<form asp-action="Edit" asp-route-id="@Model.teacher_id" method="post" enctype="multipart/form-data" class="edit-form">
+	<div asp-validation-summary="All" class="text-danger"></div>
+	<input type="hidden" asp-for="teacher_id" />
+	<div class="mb-3"><label asp-for="last_name" class="form-label"></label><input asp-for="last_name" class="form-control" /><span asp-validation-for="last_name" class="text-danger"></span></div>
+	<div class="mb-3"><label asp-for="first_name" class="form-label"></label><input asp-for="first_name" class="form-control" /><span asp-validation-for="first_name" class="text-danger"></span></div>
+	<div class="mb-3"><label asp-for="middle_name" class="form-label"></label><input asp-for="middle_name" class="form-control" /><span asp-validation-for="middle_name" class="text-danger"></span></div>
+	<div class="mb-3"><label asp-for="birth_date" class="form-label"></label><input asp-for="birth_date" type="date" class="form-control" /><span asp-validation-for="birth_date" class="text-danger"></span></div>
+	<div class="mb-3"><label asp-for="email" class="form-label"></label><input asp-for="email" class="form-control" /><span asp-validation-for="email" class="text-danger"></span></div>
+	<div class="mb-3"><label asp-for="phone" class="form-label"></label><input asp-for="phone" class="form-control" /><span asp-validation-for="phone" class="text-danger"></span></div>
+	<div class="mb-3"><label asp-for="work_since" class="form-label"></label><input asp-for="work_since" type="date" class="form-control" /><span asp-validation-for="work_since" class="text-danger"></span></div>
+	<div class="mb-3"><label asp-for="rate" class="form-label"></label><input asp-for="rate" type="number" step="0.01" min="0" class="form-control" /><span asp-validation-for="rate" class="text-danger"></span></div>
+	<fieldset class="mb-3">
+		<legend class="fs-6">Дисциплины преподавателя</legend>@foreach (SelectListItem option in (IEnumerable<SelectListItem>)ViewBag.Relations)
+		{
+			string inputId = $"{ViewData["RelationField"]}_{option.Value}";
+			<div class="form-check">
+				<input class="form-check-input" id="@inputId" type="checkbox" name="@ViewData["RelationField"]" value="@option.Value" checked="@option.Selected" />
+				<label class="form-check-label" for="@inputId">@option.Text</label>
+			</div>
+		}
+		@if (!((IEnumerable<SelectListItem>)ViewBag.Relations).Any())
+		{
+			<p class="text-muted">Нет записей для выбора.</p>
+		}
+	</fieldset>
+	<div class="mb-3">
+		<label for="photoFile" class="form-label">Фотография</label>
+		<div class="mb-2"><partial name="_Photo" model="Model" /></div>
+		<input id="photoFile" name="photoFile" type="file" accept="image/jpeg,image/png,image/gif,image/webp,image/bmp" class="form-control" />
+		@Html.ValidationMessage("photoFile", new { @class = "text-danger" })
+		<div class="form-text">До 4 МБ. Фотография хранится в базе данных.</div>
+		@if (Model.photo != null)
+		{
+			<label class="mt-2"><input type="checkbox" name="removePhoto" value="true" /> Удалить фотографию</label>
+		}
+	</div>
+	<button type="submit" class="btn btn-primary">Сохранить</button>
+	<a asp-action="Index" class="btn btn-outline-secondary">Отмена</a>
+</form>
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

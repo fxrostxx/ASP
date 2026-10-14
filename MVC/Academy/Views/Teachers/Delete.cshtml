@@ -1,0 +1,32 @@
+@model Teacher
+@{
+	ViewData["Title"] = "Удаление преподавателя";
+}
+<h1>Удаление преподавателя</h1>
+<p>Удалить эту запись?</p>
+<div asp-validation-summary="All" class="text-danger"></div>
+<div class="mb-3"><partial name="_Photo" model="Model" /></div>
+<dl class="row">
+	<dt class="col-sm-3">ФИО</dt>
+	<dd class="col-sm-9">@Model.FullName</dd>
+	<dt class="col-sm-3">Дата рождения</dt>
+	<dd class="col-sm-9">@Model.birth_date.ToString("dd.MM.yyyy")</dd>
+	<dt class="col-sm-3">Возраст</dt>
+	<dd class="col-sm-9">@Model.Age</dd>
+	<dt class="col-sm-3">Электронная почта</dt>
+	<dd class="col-sm-9">@(Model.email ?? "-")</dd>
+	<dt class="col-sm-3">Телефон</dt>
+	<dd class="col-sm-9">@(Model.phone ?? "-")</dd>
+</dl>
+<dl class="row">
+	<dt class="col-sm-3">Начало преподавания</dt>
+	<dd class="col-sm-9">@Model.work_since.ToString("dd.MM.yyyy")</dd>
+	<dt class="col-sm-3">Стаж</dt>
+	<dd class="col-sm-9">@Model.Experience</dd>
+	<dt class="col-sm-3">Ставка</dt>
+	<dd class="col-sm-9">@Model.rate.ToString("0.00")</dd>
+</dl>
+<form asp-action="Delete" asp-route-id="@Model.teacher_id" method="post">
+	<button type="submit" class="btn btn-danger">Удалить</button>
+	<a asp-action="Index" class="btn btn-outline-secondary">Отмена</a>
+</form>

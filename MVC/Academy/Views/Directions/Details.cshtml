@@ -1,0 +1,32 @@
+@model Direction
+@{
+	ViewData["Title"] = "Подробная информация";
+}
+<h1>Подробная информация</h1>
+<dl class="row"><dt class="col-sm-3">Направление</dt><dd class="col-sm-9">@Model.direction_name</dd></dl>
+<p>
+	<a asp-action="Edit" asp-route-id="@Model.direction_id" class="btn btn-primary">Изменить</a>
+	<a asp-action="Index" class="btn btn-outline-secondary">К списку</a>
+</p>
+<h2>Группы направления</h2>
+<table class="table table-striped">
+	<thead><tr><th>Группа</th><th>Дни занятий</th><th>Дата начала</th><th></th></tr></thead>
+	<tbody>
+		@foreach (Group group in (Model.Groups))
+		{
+			<tr>
+				<td>@group.group_name.Trim()</td>
+				<td>@group.LearningDaysText</td>
+				<td>@group.start_date?.ToString("dd.MM.yyyy")</td>
+				<td>
+					<a asp-controller="Groups" asp-action="Details" asp-route-id="@group.group_id">Подробнее</a> |
+					<a asp-controller="Students" asp-action="Index" asp-route-groupId="@group.group_id">Студенты</a>
+				</td>
+			</tr>
+		}
+		@if (!(Model.Groups).Any())
+		{
+			<tr><td colspan="4" class="text-muted">Групп нет</td></tr>
+		}
+	</tbody>
+</table>

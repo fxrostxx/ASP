@@ -1,0 +1,32 @@
+@model Student
+@{
+	ViewData["Title"] = "Добавление студента";
+}
+<h1>Добавление студента</h1>
+<form asp-action="Create" method="post" enctype="multipart/form-data" class="edit-form">
+	<div asp-validation-summary="All" class="text-danger"></div>
+	<input type="hidden" asp-for="stud_id" />
+	<div class="mb-3"><label asp-for="last_name" class="form-label"></label><input asp-for="last_name" class="form-control" /><span asp-validation-for="last_name" class="text-danger"></span></div>
+	<div class="mb-3"><label asp-for="first_name" class="form-label"></label><input asp-for="first_name" class="form-control" /><span asp-validation-for="first_name" class="text-danger"></span></div>
+	<div class="mb-3"><label asp-for="middle_name" class="form-label"></label><input asp-for="middle_name" class="form-control" /><span asp-validation-for="middle_name" class="text-danger"></span></div>
+	<div class="mb-3"><label asp-for="birth_date" class="form-label"></label><input asp-for="birth_date" type="date" class="form-control" /><span asp-validation-for="birth_date" class="text-danger"></span></div>
+	<div class="mb-3"><label asp-for="email" class="form-label"></label><input asp-for="email" class="form-control" /><span asp-validation-for="email" class="text-danger"></span></div>
+	<div class="mb-3"><label asp-for="phone" class="form-label"></label><input asp-for="phone" class="form-control" /><span asp-validation-for="phone" class="text-danger"></span></div>
+	<div class="mb-3"><label asp-for="group" class="form-label"></label><select asp-for="group" asp-items="ViewBag.Groups" class="form-select"><option value="">Выберите группу</option></select><span asp-validation-for="group" class="text-danger"></span></div>
+	<div class="mb-3">
+		<label for="photoFile" class="form-label">Фотография</label>
+		<div class="mb-2"><partial name="_Photo" model="Model" /></div>
+		<input id="photoFile" name="photoFile" type="file" accept="image/jpeg,image/png,image/gif,image/webp,image/bmp" class="form-control" />
+		@Html.ValidationMessage("photoFile", new { @class = "text-danger" })
+		<div class="form-text">До 4 МБ. Фотография хранится в базе данных.</div>
+		@if (Model.photo != null)
+		{
+			<label class="mt-2"><input type="checkbox" name="removePhoto" value="true" /> Удалить фотографию</label>
+		}
+	</div>
+	<button type="submit" class="btn btn-primary">Сохранить</button>
+	<a asp-action="Index" class="btn btn-outline-secondary">Отмена</a>
+</form>
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}
