@@ -52,6 +52,7 @@ public class InstructorsController : Controller
 		}
 
 		var instructor = await _context.Instructors
+			.Include(i => i.OfficeAssignment)
 			.FirstOrDefaultAsync(m => m.ID == id);
 		if (instructor == null)
 		{
@@ -91,7 +92,7 @@ public class InstructorsController : Controller
 			return NotFound();
 		}
 
-		var instructor = await _context.Instructors.FindAsync(id);
+		var instructor = await _context.Instructors.Include(i => i.OfficeAssignment).AsNoTracking().FirstOrDefaultAsync(i => i.ID == id);
 		if (instructor == null)
 		{
 			return NotFound();
@@ -111,26 +112,45 @@ public class InstructorsController : Controller
 			return NotFound();
 		}
 
-		if (ModelState.IsValid)
+		instructor = await _context.Instructors.Include(i => i.OfficeAssignment).FirstOrDefaultAsync(i => i.ID == id);
+
+		//if (ModelState.IsValid)
+		//{
+		//	try
+		//	{
+		//		_context.Update(instructor);
+		//		await _context.SaveChangesAsync();
+		//	}
+		//	catch (DbUpdateConcurrencyException)
+		//	{
+		//		if (!InstructorExists(instructor.ID))
+		//		{
+		//			return NotFound();
+		//		}
+		//		else
+		//		{
+		//			throw;
+		//		}
+		//	}
+		//	return RedirectToAction(nameof(Index));
+		//}
+
+		Task<bool> ok = TryUpdateModelAsync<Instructor>(instructor, "", i => i.FirstName, i => i.LastName, i => i.HireDate, i => i.OfficeAssignment);
+		if (ok.IsCompleted)
 		{
+			if (String.IsNullOrWhiteSpace(instructor.OfficeAssignment?.Location))
+				instructor.OfficeAssignment = null;
 			try
 			{
-				_context.Update(instructor);
 				await _context.SaveChangesAsync();
 			}
-			catch (DbUpdateConcurrencyException)
+			catch (DbUpdateException ex)
 			{
-				if (!InstructorExists(instructor.ID))
-				{
-					return NotFound();
-				}
-				else
-				{
-					throw;
-				}
+				ModelState.AddModelError("", "Unable to update data");
+				return View(instructor);
 			}
-			return RedirectToAction(nameof(Index));
 		}
+		return Redirect($"/instructors/Details/{instructor.ID}");
 		return View(instructor);
 	}
 
