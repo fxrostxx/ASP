@@ -66,6 +66,9 @@ public class InstructorsController : Controller
 	// GET: INSTRUCTORS/Create
 	public IActionResult Create()
 	{
+		Instructor instructor = new Instructor();
+		instructor.CourseAssignments = new List<CourseAssignment>();
+		PopulateAssignmentCourseData(instructor);
 		return View();
 	}
 
@@ -74,14 +77,24 @@ public class InstructorsController : Controller
 	// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 	[HttpPost]
 	[ValidateAntiForgeryToken]
-	public async Task<IActionResult> Create([Bind("ID,LastName,FirstName,HireDate,FullName,CourseAssignments,OfficeAssignment")] Instructor instructor)
+	public async Task<IActionResult> Create([Bind("ID,LastName,FirstName,HireDate,FullName,CourseAssignments,OfficeAssignment")] Instructor instructor, string[] selectedCourses)
 	{
+		if (selectedCourses != null)
+		{
+			instructor.CourseAssignments = new List<CourseAssignment>();
+			foreach (string course in selectedCourses)
+			{
+				CourseAssignment courseAssignment = new CourseAssignment { InstructorID = instructor.ID, CourseID = Convert.ToInt32(course) };
+				instructor.CourseAssignments.Add(courseAssignment);
+			}
+		}
 		if (ModelState.IsValid)
 		{
 			_context.Add(instructor);
 			await _context.SaveChangesAsync();
 			return RedirectToAction(nameof(Index));
 		}
+		PopulateAssignmentCourseData(instructor);
 		return View(instructor);
 	}
 
